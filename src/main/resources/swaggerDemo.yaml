@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: home-iot-api
+  description: My fyrst projekt
+paths:
+  /createEmpl:
+    post:
+      tags:
+        - employer create
+      operationId: create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createEmpl'
+              links:
+                operationRef: 'https://virtserver.swaggerhub.com/Zlookas/None/1.0.0'
+      responses:
+        200:
+          description: successfully registered employer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    createEmpl:
+      type: object
+      required:
+        - id
+        - fio
+        - position
+        - salary
+        - createDate
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Идентификатор пользователя
+          example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
+        fio:
+          type: string
+          example: Петров Петр Петрович
+        position:
+          type: string
+          enum:
+            - Тестировщик
+            - Разработчик
+            - Аналитик
+            - Продуктоунер
+          example: Тестировщик
+        salary:
+          type: number
+          format: double
+        createDate:
+          type: string
+          format: date
+          example: 2010-01-01
+        pasScan:
+          type: string
+          format: blob
+          example: 0729a58022401e69eb50002a5d5c51b
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 200
+        message:
+          type: string
+          example: all good
